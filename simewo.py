@@ -9,9 +9,12 @@ def find(word):
 		# this line considers the word formed by removing one character from the original word
 		pattern += '$|^'+word[0:i]+word[i+1:len(word)]
 
-		# this loop considers words formed by adding each character from A to Z, one by one, in the original word
+		
 		for j in range(65,91):
+			# this line considers words formed by adding each character from A to Z, one by one, in the original word
 			pattern += '$|^'+word[0:i]+chr(j)+word[i:len(word)]
+			# this line considers words formed by replacing each character in the original word by every character from A to Z, one by one
+			pattern += '$|^'+word[0:i]+chr(j)+word[i+1:len(word)]
 	
 	pattern += '$)'
 
@@ -22,10 +25,12 @@ def find(word):
 	with open('sowpods.txt') as file:
 		list = re.findall(pattern,file.read(),re.MULTILINE)
 
-	
-	print 'Similar Meaningful Words : '
-	for simewo in list:
-		print simewo
+	if len(list)==0:
+		print "No words found."
+	else:
+		print 'Similar Meaningful Words : '
+		for simewo in list:
+			print simewo
 
 if __name__ == '__main__':
 	if(len(sys.argv)!=2):
